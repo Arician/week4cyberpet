@@ -30,11 +30,11 @@ class animal{
 
     feed(){
         this.hunger-=20
-        this.statcap()
+        statcap()
     }
     water(){
         this.thirst-=20
-        this.statcap()
+        statcap()
     }
     time(){
         if(this.stress<80){
