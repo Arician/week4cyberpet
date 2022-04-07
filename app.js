@@ -1,10 +1,14 @@
 const dogBtn=document.getElementById("dogBtn")
+const catBtn=document.getElementById("catBtn")
+const birdBtn=document.getElementById("birdBtn")
 const title=document.getElementById("title")
 const titlePage=document.getElementById("titlePage")
 const heroPage=document.getElementById("heroPage")
-const walkies=document.getElementById("walkiesBtn")
+const walkiesBtn=document.getElementById("walkiesBtn")
 const feedBtn=document.getElementById("feedBtn")
 const waterBtn=document.getElementById("waterBtn")
+const playBtn=document.getElementById("playBtn")
+const cageBtn=document.getElementById("cageBtn")
 const petStatus=document.getElementById("petStatus")
 
 
@@ -70,7 +74,7 @@ class animal{
         } else if(this.stress >= 30 ) {
             petStatus.textContent = `${this._name} needs more food, water or fun`;
         } else {
-            petStatus.textContent = `${this._name} has had enough food,water or fun ` ;
+            petStatus.textContent = `${this._name} has had enough food, water or fun` ;
         }
         return this.hunger, this.thirst, this.stress
         }else{
@@ -108,19 +112,87 @@ class dog extends animal{
         }
     }
 }
+class cat extends animal{
+    constructor(name){
+        super(name)
+        this.species="cat"
+    }
+    play(){
+        this.stress-=30
+        this.thirst+=10
+        this.statcap() 
+       if (this.stress >= 50 || this.thirst >= 50) {
+            petStatus.textContent = `${this._name} needs more exercise and/or a drink`;
+        }else if(this.stress >= 30 || this.thirst >= 30 ) {
+             petStatus.textContent = `${this._name} needs more exercise and/or a drink`;
+        }else{
+             petStatus.textContent = `${this._name} has had enough exercise and water ` ;
+        }
+    }
+}
+class bird extends animal{
+    constructor(name){
+        super(name)
+        this.species="bird"
+        this.cage="in"
+    }
+    cageToggle(){
+        if(this.cage=="in"){
+            this.cage="out"
+            cageBtn.textContent="Return to cage"
+        }else{
+            this.cage="in"
+            cageBtn.textContent="Release from cage"
+        }
+    }
+    time(){
+        if(this.cage=="in"||this.stress<80){
+            this.hunger+=5
+            this.thirst+=10
+            this.stress+=20
+        }else if(this.cage=="in"){
+            this.hunger+=20
+            this.thirst+=30
+            this.stress+=20
+        }else{
+            this.hunger+=10
+            this.thirst+=15
+            this.stress-=10
+        }
+    }
+}
 
 
+
+let createPet=(i)=>{
+    petName=prompt(`What would you like to name your ${i}?`)//all of this into a funtion, using template literals and if statments to make it work for all three animals
+    titlePage.style.display="none"
+    heroPage.style.display="block"
+    if (i=="dog"){
+        newPet = new dog(petName)
+        walkiesBtn.style.display="block"       
+    } else if (i=="cat"){
+        newPet = new cat(petName)
+        playBtn.style.display="block"
+    } else {
+        newPet = new bird(petName)
+        cageBtn.style.display="block"     
+    }
+    setInterval(function(){newPet.time()},300000)
+    return newPet
+}       
+    
 
 
 
 dogBtn.addEventListener("click",() => {
-    petName=prompt("What would you like to name your dog?")
-    titlePage.style.display="none"
-    heroPage.style.display="block"
-    walkies.style.display="block"
-    newPet=new dog(petName)
-    setInterval(function(){newPet.time()},300000)
-    return newPet
+    createPet("dog")
+})
+catBtn.addEventListener("click",() => {
+    createPet("cat")
+})
+birdBtn.addEventListener("click", () => {
+    createPet("bird")
 })
 feedBtn.addEventListener("click",() => {
     newPet.feed()
@@ -131,6 +203,13 @@ waterBtn.addEventListener("click",() => {
 walkiesBtn.addEventListener("click",() => {
     newPet.walkies()
 })
+playBtn.addEventListener("click",()=>{
+    newPet.play()
+})
+cageBtn.addEventListener("click",() => {
+    newPet.cageToggle()
+})
+
 
 
 
