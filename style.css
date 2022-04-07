@@ -1,5 +1,33 @@
+*{
+    background-color: rgb(186, 186, 186);
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: 800;
+}
+button{
+    background-color:rgb(188, 131, 242);
+    border-style: solid;
+    border-width: 1px;
+    border-color: purple;
+    border-radius: 20px;
+    transition: all .2s;
+    transition: active .1s;
+}
+button:hover{
+    transform: scale(1.12);
+}
+#titlePage{
+    height:100vh;
+    display: flex;
+    justify-content:center;
+    align-items:center;
+    flex-direction:column;
+}
 #heroPage{
+    height:100vh;
     display: none;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
 }
 #walkiesBtn{
     display: none;
@@ -9,4 +37,7 @@
 }
 #cageBtn{
     display: none;
+}
+#petImg{
+    height: 500px;
 }

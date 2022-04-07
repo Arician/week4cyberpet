@@ -32,12 +32,14 @@ class animal{
     timeStatus(){
         if (this.hunger==100&&this.thirst==100){
             petStatus.textContent=`${this._name} has run away to find a better home`
-        } else if (this.stress >= 50) {
-            petStatus.textContent = `${this._name} needs food, water or fun`;
-        } else if(this.stress >= 30 ) {
-            petStatus.textContent = `${this._name} needs more food, water or fun`;
-        } else {
-            petStatus.textContent = `${this._name} has had enough food, water or fun` ;
+        } else if (this.hunger > 50) {
+            petStatus.textContent = `${this._name} looks hungry`;
+        } else if(this.thirst > 50 ) {
+            petStatus.textContent = `${this._name} looks thirsty`;
+        } else if(this.stress>50){
+            petStatus.textContent=`${this._name} looks restless`;
+        }else{
+            petStatus.textContent = `${this._name} looks content` ;
         }
     }
     statcap(){
@@ -63,22 +65,22 @@ class animal{
         this.hunger-=20
         this.statcap()
         if (this.hunger >= 50) {
-            petStatus.textContent = `${this._name} needs feeding. Be careful he might bolt his food`;
+            petStatus.textContent = `${this._name} is wolfing their food down`;
         } else if(this.hunger >= 30 ) { 
-        petStatus.textContent = `${this._name} needs more food`;
+        petStatus.textContent = `${this._name} is happily eating their food`;
         } else{
-        petStatus.textContent = `${this._name} has had enough food ` ;
+        petStatus.textContent = `${this._name} is picking at their food`;
         }
     }
     water(){
         this.thirst-=20
         this.statcap()  
         if (this.thirst >= 50) {
-            petStatus.textContent = `${this._name} needs water`;
+            petStatus.textContent = `${this._name} is greedily drinking water`;
         } else if(this.thirst >= 30 ) {
-            petStatus.textContent = `${this._name} needs more water`;
+            petStatus.textContent = `${this._name} is happily drinking their water`;
         } else {     
-            petStatus.textContent = `${this._name} has had enough water ` ;
+            petStatus.textContent = `${this._name} is lazily drinking their water`;
         }
     }
     time(){
@@ -126,12 +128,12 @@ class cat extends animal{
         this.stress-=30
         this.thirst+=10
         this.statcap() 
-       if (this.stress >= 50 || this.thirst >= 50) {
-            petStatus.textContent = `${this._name} needs more exercise and/or a drink`;
-        }else if(this.stress >= 30 || this.thirst >= 30 ) {
-             petStatus.textContent = `${this._name} needs more exercise and/or a drink`;
+       if (this.stress >= 50) {
+            petStatus.textContent = `${this._name} has worked up a sweat but wants more fun`;
+        }else if(this.stress >= 30) {
+             petStatus.textContent = `${this._name} is starting to calm down`;
         }else{
-             petStatus.textContent = `${this._name} has had enough exercise and water ` ;
+             petStatus.textContent = `${this._name} is nice and calm`;
         }
     }
 }
@@ -160,18 +162,20 @@ class bird extends animal{
             this.hunger+=5
             this.thirst+=10
             this.stress+=20
+            this.statcap()
         }else if(this.cage=="in"){
             this.timeStatus()
             this.hunger+=20
             this.thirst+=30
             this.stress+=20
+            this.statcap()
         }else{
             this.timeStatus()
             this.hunger+=10
             this.thirst+=15
             this.stress-=10
+            this.statcap()
         }
-        this.timeStatus()
     }
 }
 
@@ -180,7 +184,7 @@ class bird extends animal{
 let createPet=(i)=>{
     petName=prompt(`What would you like to name your ${i}?`)//all of this into a funtion, using template literals and if statments to make it work for all three animals
     titlePage.style.display="none"
-    heroPage.style.display="block"
+    heroPage.style.display="flex"
     if (i=="dog"){
         newPet = new dog(petName)
         walkiesBtn.style.display="block"
