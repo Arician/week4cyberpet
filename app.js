@@ -10,9 +10,11 @@ const waterBtn=document.getElementById("waterBtn")
 const playBtn=document.getElementById("playBtn")
 const cageBtn=document.getElementById("cageBtn")
 const petStatus=document.getElementById("petStatus")
+const btns=document.querySelectorAll("button")
 
-
-
+const remove=(i)=>{
+    i.style.display="none"
+}
 
 class animal{
     constructor(name){
@@ -20,6 +22,21 @@ class animal{
         this.hunger=50
         this.thirst=50
         this.stress=0
+    }
+    gameover(){
+        this.timeStatus()
+        btns.forEach(remove)
+    }
+    timeStatus(){
+        if (this.hunger==100&&this.thirst==100){
+            petStatus.textContent=`${this._name} has run away to find a better home`
+        } else if (this.stress >= 50) {
+            petStatus.textContent = `${this._name} needs food, water or fun`;
+        } else if(this.stress >= 30 ) {
+            petStatus.textContent = `${this._name} needs more food, water or fun`;
+        } else {
+            petStatus.textContent = `${this._name} has had enough food, water or fun` ;
+        }
     }
     statcap(){
         if(this.hunger<0){
@@ -63,34 +80,22 @@ class animal{
         }
     }
     time(){
-        if(this.stress<80){
+        if(this.hunger==100&&this.thirst==100){
+            this.gameover()
+        }else if(this.stress<80){
+        this.timeStatus()    
         this.hunger+=10
         this.thirst+=15
         this.stress+=20
         console.log("test2")
         this.statcap() 
-        if (this.stress >= 50) {
-            petStatus.textContent = `${this._name} needs food, water or fun`;
-        } else if(this.stress >= 30 ) {
-            petStatus.textContent = `${this._name} needs more food, water or fun`;
-        } else {
-            petStatus.textContent = `${this._name} has had enough food, water or fun` ;
-        }
-        return this.hunger, this.thirst, this.stress
         }else{
-        this.hunger+=20
-        this.thirst+=30
-        this.stress+=20
-        console.log("test")
-        this.statcap() 
-        if (this.hunger >= 50 || this.thirst >= 50 || this.stress >= 50) {
-            petStatus.textContent = `${this._name} needs more food, more water and exercise`
-        } else if(this.hunger >= 30 || this.thirst >= 30 || this.stress >= 30) {
-            petStatus.textContent = `${this._name} needs more food, more water and exercise`
-        } else {
-            petStatus.textContent = `${this._name}has had enough food, enough water and enough exercise `
-        }
-        return this.hunger, this.thirst, this.stress
+            this.timeStatus()    
+            this.hunger+=20
+            this.thirst+=30
+            this.stress+=20
+            console.log("test")
+            this.statcap() 
     }
     }
     }
@@ -146,19 +151,25 @@ class bird extends animal{
         }
     }
     time(){
-        if(this.cage=="in"||this.stress<80){
+        if(this.hunger==100&&this.thirst==100){
+            this.gameover()
+        }else if(this.cage=="in"&&this.stress<80){
+            this.timeStatus()
             this.hunger+=5
             this.thirst+=10
             this.stress+=20
         }else if(this.cage=="in"){
+            this.timeStatus()
             this.hunger+=20
             this.thirst+=30
             this.stress+=20
         }else{
+            this.timeStatus()
             this.hunger+=10
             this.thirst+=15
             this.stress-=10
         }
+        this.timeStatus()
     }
 }
 
