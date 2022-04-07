@@ -11,6 +11,7 @@ const playBtn=document.getElementById("playBtn")
 const cageBtn=document.getElementById("cageBtn")
 const petStatus=document.getElementById("petStatus")
 const btns=document.querySelectorAll("button")
+const petImg=document.getElementById("petImg")
 
 const remove=(i)=>{
     i.style.display="none"
@@ -26,6 +27,7 @@ class animal{
     gameover(){
         this.timeStatus()
         btns.forEach(remove)
+        petImg.src="images/gameover.png"
     }
     timeStatus(){
         if (this.hunger==100&&this.thirst==100){
@@ -87,14 +89,12 @@ class animal{
         this.hunger+=10
         this.thirst+=15
         this.stress+=20
-        console.log("test2")
         this.statcap() 
         }else{
             this.timeStatus()    
             this.hunger+=20
             this.thirst+=30
             this.stress+=20
-            console.log("test")
             this.statcap() 
     }
     }
@@ -145,9 +145,11 @@ class bird extends animal{
         if(this.cage=="in"){
             this.cage="out"
             cageBtn.textContent="Return to cage"
+            petImg.src="images/bird.png"
         }else{
             this.cage="in"
             cageBtn.textContent="Release from cage"
+            petImg.src="images/cage.png"
         }
     }
     time(){
@@ -181,13 +183,16 @@ let createPet=(i)=>{
     heroPage.style.display="block"
     if (i=="dog"){
         newPet = new dog(petName)
-        walkiesBtn.style.display="block"       
+        walkiesBtn.style.display="block"
+        petImg.src="images/dog.png"       
     } else if (i=="cat"){
         newPet = new cat(petName)
         playBtn.style.display="block"
+        petImg.src="images/cat.png"
     } else {
         newPet = new bird(petName)
-        cageBtn.style.display="block"     
+        cageBtn.style.display="block"
+        petImg.src="images/cage.png"     
     }
     setInterval(function(){newPet.time()},300000)
     return newPet
